@@ -10,6 +10,9 @@ class Participant extends Model
 {
     use HasFactory;
 
+
+    // Un participant pourra avoir plusieurs réponses
+
     public function answers()
     {
         return $this->hasMany(Answers::class);

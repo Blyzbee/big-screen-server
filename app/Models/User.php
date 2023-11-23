@@ -44,6 +44,8 @@ class User extends Authenticatable
     ];
 
 
+    // Un admin aura plusieurs Sondage / Survey
+
     public function survey()
     {
         return $this->hasMany(Survey::class);

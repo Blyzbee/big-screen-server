@@ -13,7 +13,9 @@ return new class extends Migration
     {
         Schema::create('surveys', function (Blueprint $table) {
             $table->id();
+            // Titre du sondage du questionnaire
             $table->string('title');
+            // Clé étrangère table User
             $table->foreignId('user_id')->constrained();
             $table->timestamps();
         });

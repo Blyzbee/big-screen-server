@@ -13,7 +13,9 @@ return new class extends Migration
     {
         Schema::create('participants', function (Blueprint $table) {
             $table->id();
+            // Table qui génère l'url pour la visualiser les réponses du participant
             $table->string('url');
+            // Table qui stocke l'email d'un participant
             $table->string('email');
             $table->timestamps();
         });

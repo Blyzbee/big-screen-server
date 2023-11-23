@@ -11,10 +11,16 @@ class Questions extends Model
 {
     use HasFactory;
 
+
+    // Une question pourra avoir plusieurs réponses
+
     public function answers()
     {
         return $this->hasMany(Answers::class);
     }
+
+
+    // Chaque instance de Questions appartient à un sondage (Survey).
 
     public function survey()
     {

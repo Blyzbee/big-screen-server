@@ -12,11 +12,14 @@ class Survey extends Model
     use HasFactory;
 
 
+    // Un sondage a plusieurs questionnaire
+
     public function survey()
     {
         return $this->hasMany(Questions::class);
     }
 
+    // Chaque insatnce de Survey appartion à un administrateur
 
     public function user()
     {
