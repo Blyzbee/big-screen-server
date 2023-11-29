@@ -9,9 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Faker\Generator as Faker;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
- */
+
 class UserFactory extends Factory
 {
     protected static ?string $password;

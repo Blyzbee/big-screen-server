@@ -28,8 +28,6 @@ class UserController extends Controller
     }
 
 
-
-
     // Fonction suppression de l'administrateur
 
     // Récupération de son id
