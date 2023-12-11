@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\SurveyController;
+use App\Http\Controllers\QuestionsController;
 
 
 /*
@@ -28,7 +30,7 @@ Route::delete('/logout',[UserController::class, 'logout']);
 // ----------------------------------------------------------
 
 // Api affichage des données surveys
-Route::get('/surveys',[SurveyController::class, 'getQuestions']);
+Route::get('/surveys',[SurveyController::class, 'getSurveys']);
 // Api créer un nouveu survey
 Route::post('/surveys/add',[SurveyController::class, 'newSurvey']);
 
@@ -46,13 +48,13 @@ Route::post('/questions/add',[QuestionsController::class, 'newSurvey']);
 
 // Questions
 // Api affichage des questions
-Route::get('/questions',[Questionstroller::class, 'getQuestions']);
+Route::get('/questions',[QuestionsController::class, 'getQuestions']);
 
 //---------------------------------------------------------------------------------------
 
 // Answers
 // Api recupération des réponses
-Route::post('/answers',[Answerstroller::class, 'RegisterAnswers']);
+Route::post('/answers/register',[Answerstroller::class, 'RegisterAnswers']);
 // Api affichage des réponses d'un utilisateur
 Route::get('/answers/{id}',[Answerstroller::class, 'getAnswers']);
 
