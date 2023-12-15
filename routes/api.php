@@ -39,7 +39,7 @@ Route::post('/surveys/add',[SurveyController::class, 'newSurvey']);
 // ----------------------------------------------------------
 
 // Api créer des nouvelles questions
-Route::post('/questions/add',[QuestionsController::class, 'newSurvey']);
+// Route::post('/questions/add',[QuestionsController::class, 'newSurvey']);
 
 // Api réponses
 Route::get('/participant',[ParticipantController::class, 'getParticipant']);
@@ -63,6 +63,6 @@ Route::post('/add/participant',[ParticipantController::class, 'RegisterParticipa
 // Api recupération des réponses du formulaire
 Route::post('/answers/register',[AnswersController::class, 'RegisterAnswers']);
 // Api affichage des réponses d'un utilisateur
-Route::get('/answers',[AnswersController::class, 'getAnswers']);
+Route::get('/answers/:id',[AnswersController::class, 'getAnswers']);
 
 
