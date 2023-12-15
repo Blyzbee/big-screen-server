@@ -4,7 +4,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SurveyController;
+use App\Http\Controllers\AnswersController;
 use App\Http\Controllers\QuestionsController;
+use App\Http\Controllers\ParticipantController;
 
 
 /*
@@ -35,27 +37,32 @@ Route::get('/surveys',[SurveyController::class, 'getSurveys']);
 Route::post('/surveys/add',[SurveyController::class, 'newSurvey']);
 
 // ----------------------------------------------------------
+
 // Api créer des nouvelles questions
 Route::post('/questions/add',[QuestionsController::class, 'newSurvey']);
+
+// Api réponses
+Route::get('/participant',[ParticipantController::class, 'getParticipant']);
 
 
 //////////////////////////////////////////////////////////////////////
 
-
 // Routes Api Page Public
-
 //--------------------------------------------------------------------------------------
 
 // Questions
+
 // Api affichage des questions
 Route::get('/questions',[QuestionsController::class, 'getQuestions']);
+Route::post('/add/participant',[ParticipantController::class, 'RegisterParticipant']);
 
 //---------------------------------------------------------------------------------------
 
 // Answers
-// Api recupération des réponses
-Route::post('/answers/register',[Answerstroller::class, 'RegisterAnswers']);
+
+// Api recupération des réponses du formulaire
+Route::post('/answers/register',[AnswersController::class, 'RegisterAnswers']);
 // Api affichage des réponses d'un utilisateur
-Route::get('/answers/{id}',[Answerstroller::class, 'getAnswers']);
+Route::get('/answers',[AnswersController::class, 'getAnswers']);
 
 

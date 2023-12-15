@@ -11,20 +11,32 @@ class QuestionsFactory extends Factory
 {
     public function definition(): array
     {
-
         $types = ['A', 'B', 'C'];
-
 
         // Créez une enquête et obtenez son ID
         $surveyId = Survey::factory()->create()->id;
 
+        // Générez des choix en fonction du type
+        $choices = $this->generateChoices($types);
 
         return [
             'survey_id' => $surveyId,
-            'title' => fake()->sentence(),
-            'body' => fake()->paragraph(),
-            'type' => fake()->randomElement($types),
-            'choices' => json_encode(['Choice 1', 'Choice 2', 'Choice 3'])
+            'title' => $this->faker->sentence(),
+            'body' => $this->faker->paragraph(),
+            'type' => $this->faker->randomElement($types),
+            'choices' => json_encode($this->generateChoices($this->faker->randomElement($types))),
         ];
     }
+
+    // Fonction pour générer des choix en fonction du type
+    private function generateChoices($types): array
+    {
+        return $types === 'A'
+            ? ['Choice A1', 'Choice A2', 'Choice A3']
+            : ($types === 'B'
+                ? ['']
+                : ($types === 'C' ? ['1', '2', '3', '4', '5'] : []));
+    }
+
+
 }
