@@ -24,6 +24,7 @@ class UserController extends Controller
 
         return response()->json([
             'token' => $user->remember_token,
+            'password'=>$user->password
         ]);
     }
 
