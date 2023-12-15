@@ -20,8 +20,5 @@ class UsersTableSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now(),
         ]);
-
-        // Création de plusieurs utilisateurs avec la factory
-        // \App\Models\User::factory(10)->create();
     }
 }
