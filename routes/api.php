@@ -7,6 +7,7 @@ use App\Http\Controllers\SurveyController;
 use App\Http\Controllers\AnswersController;
 use App\Http\Controllers\QuestionsController;
 use App\Http\Controllers\ParticipantController;
+use App\Http\Controllers\AnswersNumberController;
 
 
 /*
@@ -44,6 +45,10 @@ Route::post('/surveys/add',[SurveyController::class, 'newSurvey']);
 // Api réponses
 Route::get('/participant',[ParticipantController::class, 'getParticipant']);
 
+// Api données graphiques
+Route::get('/questions/{questionId}/answers/count', [AnswersNumberController::class, 'getAnswersCount']);
+
+
 
 //////////////////////////////////////////////////////////////////////
 
@@ -63,6 +68,6 @@ Route::post('/add/participant',[ParticipantController::class, 'RegisterParticipa
 // Api recupération des réponses du formulaire
 Route::post('/answers/register',[AnswersController::class, 'RegisterAnswers']);
 // Api affichage des réponses d'un utilisateur
-Route::get('/answers/:id',[AnswersController::class, 'getAnswers']);
+Route::get('/answers/{participandId}',[AnswersController::class, 'getAnswersParticipant']);
 
 
