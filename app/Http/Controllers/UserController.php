@@ -16,9 +16,17 @@ class UserController extends Controller
     {
         $user = User::where('email', $request->email)->first();
 
-        if (!$user || !Hash::check($request->password, $user->password)) {
+        // Vérifie si l'utilisateur existe
+        if (!$user) {
             return response()->json([
-                'message' => 'Invalid credentials',
+                'message' => 'User not found',
+            ], 401);
+        }
+
+        // Vérifie si le mot de passe correspond
+        if (!Hash::check($request->password, $user->password)) {
+            return response()->json([
+                'message' => 'Invalid password',
             ], 401);
         }
 
@@ -32,7 +40,8 @@ class UserController extends Controller
     // Fonction suppression de l'administrateur
 
     // Récupération de son id
-    public function logout($id){
+    public function logout($id)
+    {
 
         // La méthode find() permet de sélection l'utilisateur qui correspond à l'id
         $user = User::find($id);
@@ -49,8 +58,6 @@ class UserController extends Controller
         ];
 
         // On retourne la réponse de la rêque dans un format JSON
-        return response() ->json($data,200);
+        return response()->json($data, 200);
     }
-
-
 }
