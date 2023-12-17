@@ -3,52 +3,54 @@
 namespace App\Http\Controllers;
 
 use App\Models\Answers;
-use App\Models\Questions;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 
 class AnswersNumberController extends Controller
 {
-    // Question 6
-
-    public function getAnswersCount(Request $request, $questionId)
+    /**
+     * Get the count of answers for a specific question.
+     *
+     * @param Request $request
+     * @param string $questionId
+     *
+     * @return JsonResponse
+     */
+    public function getAnswersCount(Request $request, $questionId): JsonResponse
     {
-        // Utilisez la relation pour obtenir la question associée
+        // Use the relationship to get the associated question
         $question = Answers::find($questionId);
 
-        // Vérifiez si la question existe
+        // Check if the question exists
         if (!$question) {
             return response()->json(['error' => 'Question introuvable'], 404);
         }
 
-        // Spécifiez la valeur de réponse recherchée
-        if($questionId === '6' ){
-            $requestData = ["Oculus Quest","Oculus Rifts","HTC Vive","Windows Mixed
-            Reality","Valve index"];
-        }if ($questionId === '7' ){
+        // Specify the desired response values based on the question ID
+        if ($questionId === '6') {
+            $requestData = ["Oculus Quest", "Oculus Rifts", "HTC Vive", "Windows Mixed Reality", "Valve index"];
+        } elseif ($questionId === '7') {
             $requestData = ["SteamVR", "Occulus store", "Viveport", "Windows store"];
-        }if ($questionId === '10'  ) {
-            $requestData = ["regarder la TV en direct", "regarder des films, travailler",
-            "jouer en solo", "jouer en équipe"];
-        }if($questionId >= '11' || $questionId >= '15'  ){
-            $requestData = ["1","2","3","4","5"];
+        } elseif ($questionId === '10') {
+            $requestData = ["regarder la TV en direct", "regarder des films, travailler", "jouer en solo", "jouer en équipe"];
+        } elseif ($questionId >= '11' || $questionId >= '15') {
+            $requestData = ["1", "2", "3", "4", "5"];
         }
 
-
-        // Initialisez le tableau de résultats
+        // Initialize the results array
         $responseCounts = [];
 
-        // Parcourez chaque élément du tableau $requestData
+        // Loop through each item in the $requestData array
         foreach ($requestData as $responses) {
-        // Comptez le nombre de réponses pour la question donnée avec la valeur spécifiée
-        $count = Answers::where('question_id', $questionId)
-                       ->where('response', $responses)
-                       ->count();
+            // Count the number of answers for the given question with the specified value
+            $count = Answers::where('question_id', $questionId)
+                ->where('response', $responses)
+                ->count();
 
-        // Ajoutez le résultat au tableau de résultats
-        $responseCounts[$responses] = $count;
+            // Add the result to the results array
+            $responseCounts[$responses] = $count;
         }
 
         return response()->json(['question_id' => $questionId, 'response_counts' => $responseCounts]);
-
     }
 }

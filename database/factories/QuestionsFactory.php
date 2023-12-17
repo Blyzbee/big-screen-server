@@ -7,8 +7,25 @@ use App\Models\Question;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Faker\Factory as FakerFactory;
 
+/**
+ * Class QuestionsFactory
+ *
+ * @package Database\Factories
+ */
 class QuestionsFactory extends Factory
 {
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Question::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
     public function definition(): array
     {
         $types = ['A', 'B', 'C'];
@@ -28,8 +45,14 @@ class QuestionsFactory extends Factory
         ];
     }
 
-    // Fonction pour générer des choix en fonction du type
-    private function generateChoices($types): array
+    /**
+     * Fonction pour générer des choix en fonction du type.
+     *
+     * @param array $types
+     *
+     * @return array
+     */
+    private function generateChoices(array $types): array
     {
         return $types === 'A'
             ? ['Choice A1', 'Choice A2', 'Choice A3']
@@ -37,6 +60,4 @@ class QuestionsFactory extends Factory
                 ? ['']
                 : ($types === 'C' ? ['1', '2', '3', '4', '5'] : []));
     }
-
-
 }

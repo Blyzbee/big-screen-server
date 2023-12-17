@@ -2,13 +2,27 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\Survey;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+/**
+ * Class User
+ *
+ * @package App\Models
+ * @property int $id
+ * @property string $name
+ * @property string $email
+ * @property \Illuminate\Support\Carbon|null $email_verified_at
+ * @property string $password
+ * @property string|null $remember_token
+ * @property \Illuminate\Support\Carbon $created_at
+ * @property \Illuminate\Support\Carbon $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|Survey[] $survey
+ * @property-read int|null $survey_count
+ */
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -43,13 +57,13 @@ class User extends Authenticatable
         'password' => 'hashed'
     ];
 
-
-    // Un admin aura plusieurs Sondage / Survey
-
+    /**
+     * Un admin aura plusieurs Sondage / Survey.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function survey()
     {
         return $this->hasMany(Survey::class);
     }
-
-
 }
