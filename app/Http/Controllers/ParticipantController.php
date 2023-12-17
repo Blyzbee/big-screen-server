@@ -28,7 +28,7 @@ class ParticipantController extends Controller
         return response()->json(['message' => 'Participant ajouté(e) avec succès'], 201);
     }
 
-    public function getParticipant(Request $request): JsonResponse
+    public function getParticipants(Request $request): JsonResponse
     {
         // Use the correct model name (Question) and fetch all questions
         $participants = Participant::all();

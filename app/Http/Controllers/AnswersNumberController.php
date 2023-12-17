@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 
 class AnswersNumberController extends Controller
 {
+    // Question 6
 
     public function getAnswersCount(Request $request, $questionId)
     {
@@ -20,8 +21,18 @@ class AnswersNumberController extends Controller
         }
 
         // Spécifiez la valeur de réponse recherchée
-        $requestData = ["Oculus Quest","Oculus Rifts","HTC Vive","Windows Mixed
-        Reality","Valve index"];
+        if($questionId === '6' ){
+            $requestData = ["Oculus Quest","Oculus Rifts","HTC Vive","Windows Mixed
+            Reality","Valve index"];
+        }if ($questionId === '7' ){
+            $requestData = ["SteamVR", "Occulus store", "Viveport", "Windows store"];
+        }if ($questionId === '10'  ) {
+            $requestData = ["regarder la TV en direct", "regarder des films, travailler",
+            "jouer en solo", "jouer en équipe"];
+        }if($questionId >= '11' || $questionId >= '15'  ){
+            $requestData = ["1","2","3","4","5"];
+        }
+
 
         // Initialisez le tableau de résultats
         $responseCounts = [];

@@ -32,22 +32,8 @@ Route::delete('/logout',[UserController::class, 'logout']);
 
 // ----------------------------------------------------------
 
-// Api affichage des données surveys
-Route::get('/surveys',[SurveyController::class, 'getSurveys']);
-// Api créer un nouveu survey
-Route::post('/surveys/add',[SurveyController::class, 'newSurvey']);
-
-// ----------------------------------------------------------
-
-// Api créer des nouvelles questions
-// Route::post('/questions/add',[QuestionsController::class, 'newSurvey']);
-
-// Api réponses
-Route::get('/participant',[ParticipantController::class, 'getParticipant']);
-
 // Api données graphiques
 Route::get('/questions/{questionId}/answers/count', [AnswersNumberController::class, 'getAnswersCount']);
-
 
 
 //////////////////////////////////////////////////////////////////////
@@ -55,19 +41,32 @@ Route::get('/questions/{questionId}/answers/count', [AnswersNumberController::cl
 // Routes Api Page Public
 //--------------------------------------------------------------------------------------
 
-// Questions
+// Récupérer les questionnaires
+Route::get('/surveys',[SurveyController::class, 'getSurveys']);
+Route::post('/surveys/add',[SurveyController::class, 'newSurvey']);
 
+
+// Questions
 // Api affichage des questions
 Route::get('/questions',[QuestionsController::class, 'getQuestions']);
-Route::post('/add/participant',[ParticipantController::class, 'RegisterParticipant']);
+// Api affichaque des questions qui appartiennent à un sondage précis
+Route::get('/questions/{survey_id}',[QuestionsController::class, 'getQuestionsOneSurvey']);
+
+
+// ----------------------------------------------------------------------------------------
+
+// Participant
+// Récupération des participants
+Route::get('/participants',[ParticipantController::class, 'getParticipants']);
+// Api ajout d'un participant
+Route::post('/participant/add',[ParticipantController::class, 'RegisterParticipant']);
 
 //---------------------------------------------------------------------------------------
 
 // Answers
-
 // Api recupération des réponses du formulaire
 Route::post('/answers/register',[AnswersController::class, 'RegisterAnswers']);
-// Api affichage des réponses d'un utilisateur
+// Api affichage des réponses d'un participant
 Route::get('/answers/{participandId}',[AnswersController::class, 'getAnswersParticipant']);
 
 
