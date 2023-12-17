@@ -67,4 +67,5 @@ Route::post('/participant/add', [ParticipantController::class, 'RegisterParticip
 // Api recupération des réponses du formulaire
 Route::post('/answers/register', [AnswersController::class, 'RegisterAnswers']);
 // Api affichage des réponses d'un participant
-Route::get('/answers/{participandId}', [AnswersController::class, 'getAnswersParticipant']);
+Route::get('/answers/{participantId}', [AnswersController::class, 'getAnswersParticipant']);
+Route::get('/answersByUrl/{participantUrl}', [AnswersController::class, 'getAnswersParticipantByUrl']);
