@@ -10,12 +10,13 @@ use Illuminate\Support\Str;
 
 class AnswersController extends Controller
 {
-    public function getAnswers(Request $request): JsonResponse
+    public function getAnswersParticipant(Request $request , $participantId): JsonResponse
     {
-        $answers = Answers::all();
+        $answers = Answers::all() -> where('participant_id', $participantId);
 
         return response()->json([
-            'answers' => $answers,
+            'participant_id'=> $participantId,
+            'answers' => $answers
         ]);
     }
 
