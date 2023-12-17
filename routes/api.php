@@ -25,16 +25,16 @@ use App\Http\Controllers\ParticipantController;
 // ----------------------------------------------------------
 
 // Api de login
-Route::post('/login',[UserController::class, 'login']);
+Route::post('/login', [UserController::class, 'login']);
 // Api de logout
-Route::delete('/logout',[UserController::class, 'logout']);
+Route::delete('/logout', [UserController::class, 'logout']);
 
 // ----------------------------------------------------------
 
 // Api affichage des données surveys
-Route::get('/surveys',[SurveyController::class, 'getSurveys']);
+Route::get('/surveys', [SurveyController::class, 'getSurveys']);
 // Api créer un nouveu survey
-Route::post('/surveys/add',[SurveyController::class, 'newSurvey']);
+Route::post('/surveys/add', [SurveyController::class, 'newSurvey']);
 
 // ----------------------------------------------------------
 
@@ -42,7 +42,7 @@ Route::post('/surveys/add',[SurveyController::class, 'newSurvey']);
 // Route::post('/questions/add',[QuestionsController::class, 'newSurvey']);
 
 // Api réponses
-Route::get('/participant',[ParticipantController::class, 'getParticipant']);
+Route::get('/participant', [ParticipantController::class, 'getParticipant']);
 
 
 //////////////////////////////////////////////////////////////////////
@@ -53,16 +53,14 @@ Route::get('/participant',[ParticipantController::class, 'getParticipant']);
 // Questions
 
 // Api affichage des questions
-Route::get('/questions',[QuestionsController::class, 'getQuestions']);
-Route::post('/add/participant',[ParticipantController::class, 'RegisterParticipant']);
+Route::get('/questions', [QuestionsController::class, 'getQuestions']);
+Route::post('/add/participant', [ParticipantController::class, 'registerParticipant']);
 
 //---------------------------------------------------------------------------------------
 
 // Answers
 
 // Api recupération des réponses du formulaire
-Route::post('/answers/register',[AnswersController::class, 'RegisterAnswers']);
+Route::post('/answers/register', [AnswersController::class, 'registerAnswers']);
 // Api affichage des réponses d'un utilisateur
-Route::get('/answers/:id',[AnswersController::class, 'getAnswers']);
-
-
+Route::get('/answers/:id', [AnswersController::class, 'getAnswers']);

@@ -12,7 +12,7 @@ class CreateQuestionsTable extends Migration
             $table->id();
             // Colonne qui définit le sondage de la question
             $table->foreignId('survey_id')->constrained();
-            $table->string('title');
+            $table->integer('title');
             $table->text('body');
             // Type de la question qui détermine l'affichage du formulaire
             $table->enum('type', ['A', 'B', 'C']);

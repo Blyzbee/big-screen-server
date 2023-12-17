@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Answers;
+use App\Models\Participant;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Str;
 
 class AnswersController extends Controller
 {
@@ -17,24 +19,32 @@ class AnswersController extends Controller
         ]);
     }
 
-    public function RegisterAnswers(Request $request): JsonResponse
+    public function registerAnswers(Request $request)
     {
         $request->validate([
-            'question_id' => 'required|exists:questions,id',
-            'participant_id' => 'required|exists:participants,id',
-            'response' => 'required',
+            '*.id' => 'required|numeric',
+            '*.response' => 'required|string',
         ]);
 
-        // Création d'une nouvelle réponse
-        $answers = new Answers();
-        $answers->question_id = $request->question_id;
-        $answers->participant_id = $request->participant_id;
-        $answers->response = $request->response;
+        // Création du participant
+        $participant = new Participant();
+        $participant->url = Str::random(10);
+        $participant->email = $request->input('0');
+        $participant->save();
 
-        // Enregistrement de la réponse dans la base de données
-        $answers->save();
+        $participantId = $participant->id;
 
-        // Réponse réussie
-        return response()->json(['message' => 'Réponse ajoutée avec succès'], 201);
+        foreach ($request->all() as $answer) {
+            // Création de chaque question
+            $response = new Answers();
+            $response->question_id = $answer['id'];
+            $response->participant_id = $participantId;
+            $response->response = $answer['response'];
+            $response->created_at = now();
+            $response->save();
+        }
+
+        // Réponse de succès
+        return response()->json(['message' => 'Réponses enregistrées avec succès']);
     }
 }
