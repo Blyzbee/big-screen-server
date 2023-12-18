@@ -3,7 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Survey;
-use App\Models\Question;
+use App\Models\Questions;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Faker\Factory as FakerFactory;
 
@@ -19,7 +19,7 @@ class QuestionsFactory extends Factory
      *
      * @var string
      */
-    protected $model = Question::class;
+    protected $model = Questions::class;
 
     /**
      * Define the model's default state.

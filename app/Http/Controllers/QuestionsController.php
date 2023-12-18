@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Question;
+use App\Models\Questions;
 use App\Models\Survey;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
@@ -19,7 +19,7 @@ class QuestionsController extends Controller
     public function getQuestions(Request $request): JsonResponse
     {
         // Utilisez le nom de modèle correct (Question) et récupérez toutes les questions
-        $questions = Question::all();
+        $questions = Questions::all();
 
         return response()->json([
             'questions' => $questions, // Enveloppez les questions dans un tableau associatif

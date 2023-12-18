@@ -6,65 +6,77 @@ use App\Models\Answers;
 use App\Models\Participant;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Str;
 
 class AnswersController extends Controller
 {
-    /**
-     * Get answers for a specific participant.
-     *
-     * @param Request $request
-     * @param int $participantId
-     *
-     * @return JsonResponse
-     */
     public function getAnswersParticipant(Request $request, $participantId): JsonResponse
     {
-        $answers = Answers::where('participant_id', $participantId)->get();
+        $answers = Answers::all()->where('participant_id', $participantId);
 
         return response()->json([
             'participant_id' => $participantId,
-            'answers' => $answers,
+            'answers' => $answers
         ]);
     }
 
-    /**
-     * Register answers for a participant.
-     *
-     * @param Request $request
-     *
-     * @return JsonResponse
-     */
-    public function registerAnswers(Request $request): JsonResponse
+    public function getAnswersParticipantByUrl(Request $request, $participantUrl): JsonResponse
+    {
+        // Trouver le participant par URL
+        $participant = Participant::where('url', $participantUrl)->first();
+
+        // Vérifier si le participant existe
+        if (!$participant) {
+            return response()->json(['error' => 'Participant non trouvé'], 404);
+        }
+
+        // Récupérer le participantId
+        $participantId = $participant->id;
+
+        // Récupérer les réponses par participantId
+        $answers = Answers::where('participant_id', $participantId)->get();
+
+        return response()->json([
+            'participantId' => $participantId,
+            'answers' => $answers
+        ]);
+    }
+
+    public function registerAnswers(Request $request)
     {
         // Print the request data for debugging purposes.
         print_r($request->all());
 
         // Validate the request data.
         $request->validate([
-            '0' => 'required|email', // Assuming '0' is the key for the participant email.
-            'answers.*.id' => 'required|numeric',
-            'answers.*.response' => 'required|string',
+            'formData' => 'required|array|min:1',
+            'formData.*' => 'required|string',
         ]);
 
-        // Create a new participant.
+        $url = Str::random(10);
+
+        // Création du participant
         $participant = new Participant();
-        $participant->url = Str::random(10);
-        $participant->email = $request->input('0');
+        $participant->url = $url;
+        $participant->email = $request->formData[1];
         $participant->save();
 
         $participantId = $participant->id;
 
-        // Loop through the answers and save each one.
-        foreach ($request->input('answers') as $answer) {
-            $response = new Answers();
-            $response->question_id = $answer['id'];
-            $response->participant_id = $participantId;
-            $response->response = $answer['response'];
-            $response->created_at = now();
-            $response->save();
+        foreach ($request->formData as $questionId => $response) {
+            // Création de chaque question
+            $answer = new Answers();
+            $answer->question_id = $questionId;
+            $answer->participant_id = $participantId;
+            $answer->response = $response;
+            $answer->created_at = now();
+            $answer->save();
         }
 
-        // Return a success response.
-        return response()->json(['message' => 'Réponses enregistrées avec succès']);
+        // Réponse de succès
+        return response()->json([
+            'message' => 'Réponses enregistrées avec succès',
+            'url' => $url
+        ]);
     }
 }
