@@ -51,7 +51,7 @@ class AnswersController extends Controller
         ]);
     }
 
-    public function registerAnswers(Request $request)
+    public function registerAnswers(Request $request): JsonResponse
     {
         // Print the request data for debugging purposes.
         print_r($request->all());
