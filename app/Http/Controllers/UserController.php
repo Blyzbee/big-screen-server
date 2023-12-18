@@ -2,18 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use Validator;
+use Illuminate\Support\Facades\Hash;
 use App\Models\User;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-
+    /**
+     * Authentifie un utilisateur.
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function login(Request $request): JsonResponse
     {
+        /** @var User|null $user */
         $user = User::where('email', $request->email)->first();
 
         // Vérifie si l'utilisateur existe
@@ -32,32 +36,36 @@ class UserController extends Controller
 
         return response()->json([
             'token' => $user->remember_token,
-            'password'=>$user->password
+            'password' => $user->password
         ]);
     }
 
-
-    // Fonction suppression de l'administrateur
-
-    // Récupération de son id
-    public function logout($id)
+    /**
+     * Déconnecte un utilisateur.
+     *
+     * @param int $id Identifiant de l'utilisateur.
+     * @return JsonResponse
+     */
+    public function logout($id): JsonResponse
     {
-
-        // La méthode find() permet de sélection l'utilisateur qui correspond à l'id
+        /** @var User|null $user */
         $user = User::find($id);
 
-        // On utilise la méthode delete () pour supprimer
-        $user->delete();
+        // Vérifie si l'utilisateur existe
+        if (!$user) {
+            return response()->json([
+                'message' => 'User not found',
+            ], 404);
+        }
 
-        /* On aura en réponse ce petit message pour nous
-        confirmer que l'opération s'est bien passer */
+        // Supprime l'utilisateur
+        $user->delete();
 
         $data = [
             'status' => 200,
-            'message' => "Data deleted successfully"
+            'message' => 'Data deleted successfully',
         ];
 
-        // On retourne la réponse de la rêque dans un format JSON
         return response()->json($data, 200);
     }
 }
