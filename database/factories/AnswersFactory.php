@@ -30,7 +30,7 @@ class AnswersFactory extends Factory
     {
         return [
             'participant_id' => Participant::factory(),
-            'question_id' => Questions::factory(),
+            'question_id' => 1,
             'response' => $this->faker->paragraph,
         ];
     }
