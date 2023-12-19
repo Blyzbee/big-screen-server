@@ -35,6 +35,10 @@ Route::delete('/logout', [UserController::class, 'logout']);
 // Api données graphiques
 Route::get('/questions/answers/count/{questionId}', [AnswersNumberController::class, 'getAnswersCount']);
 
+//Api données des participants
+Route::get('/admin/allanswers', [AnswersController::class, 'getAllParticipantsWithAnswers']);
+
+
 
 ////////////////////////questions/{questionId}/answers/count///////////////////////////////////////////////
 

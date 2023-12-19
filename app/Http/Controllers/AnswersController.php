@@ -51,6 +51,57 @@ class AnswersController extends Controller
         ]);
     }
 
+
+    public function getAllParticipantsWithAnswers(): JsonResponse
+{
+    // Récupérer tous les participants
+    $participants = Participant::all();
+
+    // Initialiser un tableau pour stocker les réponses de chaque participant
+    $participantsWithAnswers = [];
+
+    foreach ($participants as $participant) {
+        $participantId = $participant->id;
+
+        // Récupérer les réponses par participantId
+        $answers = Answers::where('participant_id', $participantId)->get();
+
+        // Organiser les réponses par question
+        $organizedAnswers = [];
+
+        foreach ($answers as $answer) {
+            $questionId = $answer->question_id;
+
+            // Si la question n'est pas déjà dans le tableau, l'initialiser
+            if (!isset($organizedAnswers[$questionId])) {
+                $organizedAnswers[$questionId] = [
+                    'questionId' => $questionId,
+                    'questionBody' => $answer->question->body, // Assurez-vous d'ajuster cela en fonction de votre modèle de question
+                    'responses' => [],
+                ];
+            }
+
+            // Ajouter la réponse au tableau des réponses de la question
+            $organizedAnswers[$questionId]['responses'][] = [
+                'responseId' => $answer->id,
+                'response' => $answer->response,
+            ];
+        }
+
+        // Stocker les réponses du participant dans le tableau principal
+        $participantsWithAnswers[] = [
+            'participantId' => $participantId,
+            'participantName' => $participant->name, // Ajouter le nom du participant si nécessaire
+            'organizedAnswers' => array_values($organizedAnswers),
+        ];
+    }
+
+    return response()->json($participantsWithAnswers);
+}
+
+
+
+
     public function registerAnswers(Request $request)
     {
         // Print the request data for debugging purposes.
