@@ -53,10 +53,6 @@ class AnswersController extends Controller
 
     public function registerAnswers(Request $request): JsonResponse
     {
-        // Print the request data for debugging purposes.
-        print_r($request->all());
-
-        // Validate the request data.
         $request->validate([
             'formData' => 'required|array|min:1',
             'formData.*' => 'required|string',

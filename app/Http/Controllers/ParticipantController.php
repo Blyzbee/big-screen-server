@@ -8,48 +8,33 @@ use Illuminate\Http\JsonResponse;
 
 class ParticipantController extends Controller
 {
-    /**
-     * Register a new participant.
-     *
-     * @param Request $request
-     *
-     * @return JsonResponse
-     */
-    public function registerParticipant(Request $request): JsonResponse
-    {
+    public function RegisterParticipant(Request $request): JsonResponse {
         $request->validate([
             'url' => 'required',
-            'email' => 'required',
+            'email' => 'required'
         ]);
 
-        // Create a new participant
+        // Création d'une nouvelle réponse
         $participant = new Participant();
-        $participant->url = $request->url;
+        $participant->url= $request->url;
         $participant->email = $request->email;
-        $participant->created_at = now();
-        $participant->updated_at = now();
+        $participant->created_at = timestamp();
+        $participant->updated_at = timestamp();
 
-        // Save the participant to the database
+        // Enregistrement de la réponse dans la base de données
         $participant->save();
 
-        // Successful response
+        // Réponse réussie
         return response()->json(['message' => 'Participant ajouté(e) avec succès'], 201);
     }
 
-    /**
-     * Get all participants.
-     *
-     * @param Request $request
-     *
-     * @return JsonResponse
-     */
     public function getParticipants(Request $request): JsonResponse
     {
-        // Fetch all participants
+        // Use the correct model name (Question) and fetch all questions
         $participants = Participant::all();
 
         return response()->json([
-            'participants' => $participants,
+            'participants' => $participants, // Wrap the questions in an associative array
         ]);
     }
 }

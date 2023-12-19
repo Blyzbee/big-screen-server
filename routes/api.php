@@ -36,7 +36,7 @@ Route::delete('/logout', [UserController::class, 'logout']);
 Route::get('/questions/{questionId}/answers/count', [AnswersNumberController::class, 'getAnswersCount']);
 
 
-////////////////////////questions/{questionId}/answers/count///////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
 
 // Routes Api Page Public
 //--------------------------------------------------------------------------------------

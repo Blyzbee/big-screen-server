@@ -6,39 +6,22 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateQuestionsTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::create('questions', function (Blueprint $table) {
             $table->id();
-
             // Colonne qui définit le sondage de la question
             $table->foreignId('survey_id')->constrained();
-
-            // Corps de la question
             $table->integer('title');
-
             $table->text('body');
-
             // Type de la question qui détermine l'affichage du formulaire
             $table->enum('type', ['A', 'B', 'C']);
-
-            // Données JSON présentant les différentes réponses disponibles
+            // Données JSON présentant les différentes réponses disponible
             $table->json('choices')->nullable();
-
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('questions');

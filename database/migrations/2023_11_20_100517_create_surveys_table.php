@@ -4,21 +4,18 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-/**
- * Migration to create the 'surveys' table.
- */
-class CreateSurveysTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up(): void
     {
         Schema::create('surveys', function (Blueprint $table) {
             $table->id();
+            // Titre du sondage du questionnaire
             $table->string('title');
+            // Clé étrangère table User
             $table->foreignId('user_id')->constrained();
             $table->timestamps();
         });
@@ -26,11 +23,9 @@ class CreateSurveysTable extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down(): void
     {
         Schema::dropIfExists('surveys');
     }
-}
+};
