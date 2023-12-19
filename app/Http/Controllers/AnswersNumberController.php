@@ -19,7 +19,7 @@ class AnswersNumberController extends Controller
     public function getAnswersCount(Request $request, $questionId): JsonResponse
     {
         // Use the relationship to get the associated question
-        $question = Answers::find($questionId);
+        $question = Answers::where('question_id', $request->$questionId);
 
         // Check if the question exists
         if (!$question) {
@@ -27,13 +27,13 @@ class AnswersNumberController extends Controller
         }
 
         // Specify the desired response values based on the question ID
-        if ($questionId === '6') {
+        if  ($questionId === '6') {
             $requestData = ["Oculus Quest", "Oculus Rifts", "HTC Vive", "Windows Mixed Reality", "Valve index"];
-        } elseif ($questionId === '7') {
+        } if ($questionId === '7') {
             $requestData = ["SteamVR", "Occulus store", "Viveport", "Windows store"];
-        } elseif ($questionId === '10') {
+        } if ($questionId === '10') {
             $requestData = ["regarder la TV en direct", "regarder des films, travailler", "jouer en solo", "jouer en équipe"];
-        } elseif ($questionId >= '11' || $questionId >= '15') {
+        } if ($questionId >= '11' || $questionId >= '15') {
             $requestData = ["1", "2", "3", "4", "5"];
         }
 
@@ -46,10 +46,11 @@ class AnswersNumberController extends Controller
             $count = Answers::where('question_id', $questionId)
                 ->where('response', $responses)
                 ->count();
-
             // Add the result to the results array
             $responseCounts[$responses] = $count;
         }
+
+
 
         return response()->json(['question_id' => $questionId, 'response_counts' => $responseCounts]);
     }

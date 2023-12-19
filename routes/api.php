@@ -33,7 +33,7 @@ Route::delete('/logout', [UserController::class, 'logout']);
 // ----------------------------------------------------------
 
 // Api données graphiques
-Route::get('/questions/{questionId}/answers/count', [AnswersNumberController::class, 'getAnswersCount']);
+Route::get('/questions/answers/count/{questionId}', [AnswersNumberController::class, 'getAnswersCount']);
 
 
 ////////////////////////questions/{questionId}/answers/count///////////////////////////////////////////////
