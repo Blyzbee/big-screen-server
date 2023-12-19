@@ -69,3 +69,4 @@ Route::post('/answers/register', [AnswersController::class, 'RegisterAnswers']);
 // Api affichage des réponses d'un participant
 Route::get('/answers/{participantId}', [AnswersController::class, 'getAnswersParticipant']);
 Route::get('/answersByUrl/{participantUrl}', [AnswersController::class, 'getAnswersParticipantByUrl']);
+Route::get('/allAnswers', [AnswersController::class, 'getAllAnswers']);
